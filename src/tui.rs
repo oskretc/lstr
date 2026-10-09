@@ -465,7 +465,7 @@ fn handle_key(app_state: &mut AppState, key: KeyEvent) -> Option<PostExitAction>
     }
 
     // Search-mode input is handled first so that typed characters go into
-    // the query instead of triggering command keys like 'q', 'j', or 'k'.
+    // the query instead of triggering command keys like 'q', 'n', or 'e'.
     if app_state.in_search_mode() {
         match key.code {
             KeyCode::Esc => app_state.exit_search_mode(),
@@ -486,10 +486,10 @@ fn handle_key(app_state: &mut AppState, key: KeyEvent) -> Option<PostExitAction>
     match key.code {
         KeyCode::Char('q') | KeyCode::Esc => return Some(PostExitAction::None),
         KeyCode::Char('/') => app_state.enter_search_mode(),
-        KeyCode::Down | KeyCode::Char('j') => app_state.next(),
-        KeyCode::Up | KeyCode::Char('k') => app_state.previous(),
-        KeyCode::Left | KeyCode::Char('h') => app_state.close_encompassing_directory(),
-        KeyCode::Enter | KeyCode::Right | KeyCode::Char('l') => return handle_enter(app_state),
+        KeyCode::Down | KeyCode::Char('n') => app_state.next(),
+        KeyCode::Up | KeyCode::Char('e') => app_state.previous(),
+        KeyCode::Left | KeyCode::Char('m') => app_state.close_encompassing_directory(),
+        KeyCode::Enter | KeyCode::Right | KeyCode::Char('i') => return handle_enter(app_state),
         _ => {}
     }
     None
@@ -1102,7 +1102,7 @@ mod tests {
         app_state.list_state.select(Some(0));
         app_state.toggle_selected_directory(); // expand src
         assert_eq!(app_state.visible_entries.len(), 3);
-        handle_key(&mut app_state, key(KeyCode::Char('h')));
+        handle_key(&mut app_state, key(KeyCode::Char('m')));
         // src is collapsed again and stays selected.
         assert_eq!(app_state.visible_entries.len(), 2);
         assert_eq!(app_state.get_selected_entry().unwrap().path, PathBuf::from("src"));
@@ -1123,7 +1123,7 @@ mod tests {
     fn test_h_on_top_level_file_is_noop() {
         let mut app_state = setup_test_app_state();
         app_state.list_state.select(Some(1)); // README.md at top level
-        handle_key(&mut app_state, key(KeyCode::Char('h')));
+        handle_key(&mut app_state, key(KeyCode::Char('m')));
         assert_eq!(app_state.visible_entries.len(), 2);
         assert_eq!(app_state.get_selected_entry().unwrap().path, PathBuf::from("README.md"));
     }
@@ -1155,7 +1155,7 @@ mod tests {
     fn test_l_and_right_expand_selected_directory() {
         let mut app_state = setup_test_app_state();
         app_state.list_state.select(Some(0));
-        handle_key(&mut app_state, key(KeyCode::Char('l')));
+        handle_key(&mut app_state, key(KeyCode::Char('i')));
         assert_eq!(app_state.visible_entries.len(), 3);
         handle_key(&mut app_state, key(KeyCode::Right));
         assert_eq!(app_state.visible_entries.len(), 2);

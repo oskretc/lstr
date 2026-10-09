@@ -161,10 +161,10 @@ Launch the TUI with `lstr interactive [OPTIONS] [PATH]`.
 
 | Key(s)  | Action                                                                                                                                      |
 | :------ | :------------------------------------------------------------------------------------------------------------------------------------------ |
-| `↑` / `k` | Move selection up. |
-| `↓` / `j` | Move selection down. |
-| `←` / `h` | Collapse the selected directory, or jump to and collapse its parent. |
-| `→` / `l` | Same as `Enter`. |
+| `↑` / `e` | Move selection up. |
+| `↓` / `n` | Move selection down. |
+| `←` / `m` | Collapse the selected directory, or jump to and collapse its parent. |
+| `→` / `i` | Same as `Enter`. |
 | `Enter` | **Context-aware action:**<br>- If on a file: Open it in the configured editor (`--editor`, `$VISUAL`, or `$EDITOR`), then return to the tree.<br>- If on a directory: Toggle expand/collapse. |
 | `/` | Search: filter entries by name as you type (substring, or a glob like `*.rs` / `test_?.py` if the query contains `*` or `?`). `Esc` exits search. |
 | `q` / `Esc` | Quit the application normally. |
